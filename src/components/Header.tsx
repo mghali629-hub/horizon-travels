@@ -42,7 +42,7 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className={`transition-colors whitespace-nowrap py-1 ${pathname === link.href ? 'text-teal-400 border-b-2 border-teal-400 font-bold' : 'text-zinc-100 hover:text-white'}`}
+              className={`transition-colors whitespace-nowrap py-1 ${pathname === link.href ? 'text-[#D4AF37] border-b-2 border-[#D4AF37] font-bold' : 'text-zinc-100 hover:text-white'}`}
             >
               {link.label}
             </Link>
@@ -53,13 +53,13 @@ export function Header() {
                 <span>More</span>
                 <span className="text-[10px] opacity-80">▼</span>
               </button>
-              <div className="absolute right-0 top-full mt-1 w-56 bg-zinc-950/98 backdrop-blur-xl border border-zinc-800 rounded-xl shadow-2xl p-2 hidden group-hover:block group-focus-within:block z-50">
+              <div className="absolute right-0 top-full mt-2 w-56 bg-black border border-zinc-700 rounded-2xl shadow-2xl p-2 hidden group-hover:block group-focus-within:block z-50">
                 <div className="grid grid-cols-1 gap-1 max-h-80 overflow-y-auto no-scrollbar">
                   {navLinks.slice(5).map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="px-3 py-2 rounded-lg text-xs font-medium text-zinc-200 hover:bg-zinc-800 hover:text-white transition-colors block whitespace-nowrap"
+                      className="px-3.5 py-2.5 rounded-xl text-xs font-semibold text-zinc-100 hover:bg-zinc-800 hover:text-white transition-colors block whitespace-nowrap"
                     >
                       {link.label}
                     </Link>
