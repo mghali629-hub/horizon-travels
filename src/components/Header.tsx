@@ -37,29 +37,29 @@ export function Header() {
           </div>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-4 text-xs font-medium py-2">
+        <nav className="hidden lg:flex items-center gap-6 text-sm font-semibold py-2">
           {navLinks.slice(0, 5).map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`transition-colors whitespace-nowrap py-1 ${pathname === link.href ? 'text-teal-400 border-b-2 border-teal-400 font-bold' : 'text-slate-300 hover:text-white'}`}
+              className={`transition-colors whitespace-nowrap py-1 ${pathname === link.href ? 'text-teal-400 border-b-2 border-teal-400 font-bold' : 'text-zinc-100 hover:text-white'}`}
             >
               {link.label}
             </Link>
           ))}
           {navLinks.length > 5 && (
             <div className="relative group py-1">
-              <button className="flex items-center gap-1 text-slate-300 hover:text-white font-medium transition-colors cursor-pointer py-1">
+              <button className="flex items-center gap-1.5 text-zinc-100 hover:text-white font-semibold text-sm transition-colors cursor-pointer py-1">
                 <span>More</span>
-                <span className="text-[9px] opacity-70">▼</span>
+                <span className="text-[10px] opacity-80">▼</span>
               </button>
-              <div className="absolute right-0 top-full mt-1 w-52 bg-slate-900/95 backdrop-blur-xl border border-slate-800 rounded-xl shadow-2xl p-2 hidden group-hover:block group-focus-within:block z-50">
-                <div className="grid grid-cols-1 gap-1 max-h-72 overflow-y-auto no-scrollbar">
+              <div className="absolute right-0 top-full mt-1 w-56 bg-zinc-950/98 backdrop-blur-xl border border-zinc-800 rounded-xl shadow-2xl p-2 hidden group-hover:block group-focus-within:block z-50">
+                <div className="grid grid-cols-1 gap-1 max-h-80 overflow-y-auto no-scrollbar">
                   {navLinks.slice(5).map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="px-3 py-1.5 rounded-lg text-xs text-slate-300 hover:bg-slate-800 hover:text-white transition-colors block whitespace-nowrap"
+                      className="px-3 py-2 rounded-lg text-xs font-medium text-zinc-200 hover:bg-zinc-800 hover:text-white transition-colors block whitespace-nowrap"
                     >
                       {link.label}
                     </Link>
