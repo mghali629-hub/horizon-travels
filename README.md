@@ -1,11 +1,11 @@
-﻿# ✈️ Horizon Travels — Ultra-Luxury Aviation & Expedition Platform
+﻿# 🌍 Horizon Travels — Global Travel Booking & Destination Exploration Portal
 
-VIP travel management platform for private jet charters, superyacht expeditions, safari reserves, and custom luxury itineraries across 120 countries.
+Comprehensive travel agency platform for discovering destinations, booking curated tours, hotel stays, and custom itineraries.
 
-## 🛠 Tech Stack
+## 🛠️ Tech Stack
 - **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript & React 18
-- **Styling**: TailwindCSS
+- **Styling**: TailwindCSS & Lucide Icons
 - **Database**: Prisma ORM & SQLite
 
 ## 🚀 Quick Start
@@ -14,6 +14,7 @@ npm install
 npx prisma db push
 npm run db:seed
 npm run dev
-``n
+`
+
 ## 📄 License
 MIT License.
