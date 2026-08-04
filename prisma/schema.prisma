@@ -1,0 +1,86 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Tour {
+  id          Int       @id @default(autoincrement())
+  title       String
+  location    String
+  region      String
+  price       String
+  duration    String
+  rating      Float
+  reviews     Int
+  category    String
+  image       String
+  description String
+  createdAt   DateTime  @default(now())
+  bookings    Booking[]
+}
+
+model Booking {
+  id          Int      @id @default(autoincrement())
+  tourId      Int
+  tour        Tour     @relation(fields: [tourId], references: [id])
+  guestName   String
+  email       String
+  phone       String
+  guests      Int
+  date        String
+  concierge   Boolean  @default(true)
+  status      String   @default("CONFIRMED")
+  createdAt   DateTime @default(now())
+}
+
+model Inquiry {
+  id          Int      @id @default(autoincrement())
+  fullName    String
+  email       String
+  details     String
+  createdAt   DateTime @default(now())
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  guestName String
+  rating    Float
+  comment   String
+  tourTitle String
+  createdAt DateTime @default(now())
+}
+
+model BlogPost {
+  id        Int      @id @default(autoincrement())
+  slug      String   @unique
+  title     String
+  author    String
+  date      String
+  readTime  String
+  image     String
+  excerpt   String
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model JetCharter {
+  id          Int      @id @default(autoincrement())
+  modelName   String
+  passengers  Int
+  range       String
+  pricePerHour String
+  image       String
+}
+
+model YachtCharter {
+  id          Int      @id @default(autoincrement())
+  yachtName   String
+  length      String
+  cabins      Int
+  pricePerDay String
+  image       String
+}

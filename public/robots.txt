@@ -1,0 +1,6 @@
+﻿User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /dashboard/
+Disallow: /portal/
+Sitemap: https://horizon-travels.com/sitemap.xml
