@@ -11,7 +11,7 @@ const fleet = [
     speed: 'Mach 0.90',
     pax: '14 Passengers',
     price: 'From $12,500/hr',
-    image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=80',
     desc: 'Flagship long-range jet featuring panoramic oval windows, Ka-band Wi-Fi, and master stateroom suite.'
   },
   {
@@ -20,7 +20,7 @@ const fleet = [
     speed: 'Mach 0.925',
     pax: '19 Passengers',
     price: 'From $14,000/hr',
-    image: 'https://images.unsplash.com/photo-1559689416-08ec96843469?q=80&w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&q=80',
     desc: 'Four distinct living spaces, full dining table for 6, and Nuage zero-gravity ergonomic seats.'
   },
   {
@@ -29,7 +29,7 @@ const fleet = [
     speed: 'Mach 0.90',
     pax: '14 Passengers',
     price: 'From $11,000/hr',
-    image: 'https://images.unsplash.com/photo-1508614589041-895b88991e3e?q=80&w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=800&q=80',
     desc: 'Tri-jet ultra quiet acoustic cabin with short-runway capability for steep mountain airport landings.'
   },
   {
@@ -38,7 +38,7 @@ const fleet = [
     speed: 'Mach 0.82',
     pax: '19 Passengers',
     price: 'From $13,200/hr',
-    image: 'https://images.unsplash.com/photo-1520437358207-323b43b50729?q=80&w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1520437358207-323b43b50729?w=800&q=80',
     desc: 'Master bedroom with walk-in shower, five private cabin zones, and largest baggage capacity in executive aviation.'
   },
   {
@@ -47,7 +47,7 @@ const fleet = [
     speed: 'Mach 0.82',
     pax: '19 Passengers',
     price: 'From $18,500/hr',
-    image: 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=800&q=80',
     desc: 'Corporate airliner cabin space with executive lounge, private office, master bedroom, and en-suite bathroom.'
   },
   {
@@ -56,7 +56,7 @@ const fleet = [
     speed: 'Mach 0.84',
     pax: '25 Passengers',
     price: 'From $22,000/hr',
-    image: 'https://images.unsplash.com/photo-1556388158-158ea5ccacbd?q=80&w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=800&q=80',
     desc: 'Custom VIP configuration with state-of-the-art air filtration, private dining room, and satellite phone systems.'
   }
 ];
