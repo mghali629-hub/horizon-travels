@@ -37,16 +37,37 @@ export function Header() {
           </div>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-5 text-xs font-medium overflow-x-auto no-scrollbar [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-2">
-          {navLinks.map((link) => (
+        <nav className="hidden lg:flex items-center gap-4 text-xs font-medium py-2">
+          {navLinks.slice(0, 5).map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`transition-colors whitespace-nowrap py-1 ${pathname === link.href ? 'text-[#D4AF37] border-b-2 border-[#D4AF37]' : 'text-slate-300 hover:text-white'}`}
+              className={	ransition-colors whitespace-nowrap py-1 \}
             >
               {link.label}
             </Link>
           ))}
+          {navLinks.length > 5 && (
+            <div className="relative group py-1">
+              <button className="flex items-center gap-1 text-slate-300 hover:text-white font-medium transition-colors cursor-pointer py-1">
+                <span>More</span>
+                <span className="text-[9px] opacity-70">▼</span>
+              </button>
+              <div className="absolute right-0 top-full mt-1 w-52 bg-slate-900/95 backdrop-blur-xl border border-slate-800 rounded-xl shadow-2xl p-2 hidden group-hover:block group-focus-within:block z-50">
+                <div className="grid grid-cols-1 gap-1 max-h-72 overflow-y-auto no-scrollbar">
+                  {navLinks.slice(5).map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="px-3 py-1.5 rounded-lg text-xs text-slate-300 hover:bg-slate-800 hover:text-white transition-colors block whitespace-nowrap"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </nav>
 
         <Link
@@ -95,10 +116,7 @@ export function Footer() {
           <p className="text-[#D4AF37] font-bold mt-1 text-sm">+1 (800) 888-HORIZON</p>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto px-4 mt-8 pt-6 border-t border-slate-900 text-center text-slate-500 text-[11px]">
-        © 2026 Horizon Travels Inc. All rights reserved. Ultra-Luxury Travel Architecture.
-      </div>
-          <div className="max-w-7xl mx-auto px-4 mt-6 pt-4 border-t border-slate-900/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-500 text-[11px]">
+      <div className="max-w-7xl mx-auto px-4 mt-8 pt-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px]">
         <div>© 2026 All rights reserved.</div>
         <div>
           <a
