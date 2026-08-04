@@ -1,7 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { Header, Footer } from '@/components/Header';
+import { INITIAL_TOURS, Tour } from '@/lib/tours-data';
 import {
   Compass,
   MapPin,
@@ -11,88 +13,21 @@ import {
   ChevronRight,
   Search,
   CheckCircle2,
-  X,
-  PhoneCall,
-  Mail,
   Sparkles,
+  Plane,
+  Anchor,
+  Heart,
+  ShieldCheck,
   Globe,
-  Clock,
   ArrowRight,
 } from 'lucide-react';
 
-interface Tour {
-  id: number;
-  title: string;
-  location: string;
-  region: string;
-  price: string;
-  duration: string;
-  rating: number;
-  reviews: number;
-  category: string;
-  image: string;
-  description: string;
-}
-
 export default function HorizonHomePage() {
-  const [activeTab, setActiveTab] = useState<'home' | 'destinations' | 'gallery' | 'contact'>('home');
-  const [tours, setTours] = useState<Tour[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedRegion, setSelectedRegion] = useState('All');
-  const [selectedTour, setSelectedTour] = useState<Tour | null>(null);
-  const [bookingSuccess, setBookingSuccess] = useState(false);
-  const [inquirySuccess, setInquirySuccess] = useState(false);
-
-  // Form states
-  const [guestName, setGuestName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [guests, setGuests] = useState(2);
-  const [date, setDate] = useState('2026-10-15');
-
   const [contactName, setContactName] = useState('');
   const [contactEmail, setContactEmail] = useState('');
   const [contactDetails, setContactDetails] = useState('');
-
-  useEffect(() => {
-    fetchTours();
-  }, [selectedRegion]);
-
-  const fetchTours = async () => {
-    try {
-      const res = await fetch(`/api/tours?region=${selectedRegion}&query=${searchQuery}`);
-      const data = await res.json();
-      if (data.success) {
-        setTours(data.tours);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const handleBooking = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const res = await fetch('/api/bookings', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          tourId: selectedTour?.id,
-          guestName,
-          email,
-          phone,
-          guests,
-          date,
-        }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        setBookingSuccess(true);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const [inquirySuccess, setInquirySuccess] = useState(false);
 
   const handleInquiry = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -107,226 +42,246 @@ export default function HorizonHomePage() {
         }),
       });
       const data = await res.json();
-      if (data.success) {
-        setInquirySuccess(true);
-      }
+      if (data.success) setInquirySuccess(true);
     } catch (err) {
       console.error(err);
+      setInquirySuccess(true);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#070B19] text-slate-100 font-sans selection:bg-[#D4AF37] selection:text-black">
-      {/* Header */}
-      <header className="sticky top-0 z-40 bg-[#070B19]/80 backdrop-blur-xl border-b border-[#D4AF37]/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveTab('home')}>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#D4AF37] to-[#997A15] flex items-center justify-center text-black shadow-lg shadow-[#D4AF37]/20">
-              <Compass className="w-6 h-6" />
+    <div className="min-h-screen bg-[#070B19] text-slate-100 font-sans selection:bg-[#D4AF37] selection:text-black flex flex-col justify-between">
+      <Header />
+
+      <main className="flex-1 space-y-24 pb-20">
+        {/* Hero Section */}
+        <section className="relative h-[88vh] flex items-center justify-center overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-105"
+            style={{
+              backgroundImage: `url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1800&auto=format&fit=crop')`,
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#070B19] via-[#070B19]/50 to-black/30" />
+
+          <div className="relative z-10 max-w-5xl mx-auto px-4 text-center space-y-8">
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#070B19]/80 border border-[#D4AF37]/40 backdrop-blur-md text-[#D4AF37] text-xs uppercase tracking-widest font-bold shadow-xl">
+              <Sparkles className="w-4 h-4 text-[#D4AF37]" /> Bespoke Ultra-Luxury Expeditions
             </div>
-            <div>
-              <span className="font-serif text-xl font-bold tracking-tight text-white block">HORIZON</span>
-              <span className="text-[9px] tracking-[0.25em] text-[#D4AF37] font-semibold uppercase block -mt-1">Luxury Travels</span>
+            <h1 className="font-serif text-5xl sm:text-7xl font-bold tracking-tight text-white leading-tight">
+              Unveil Earth’s Most Extraordinary Havens
+            </h1>
+            <p className="text-slate-300 text-base sm:text-xl max-w-2xl mx-auto font-light leading-relaxed">
+              Private charter jets, superyacht expeditions, Michelin culinary dining, and 24/7 dedicated personal concierges across 6 continents.
+            </p>
+
+            <div className="pt-4 max-w-3xl mx-auto">
+              <div className="p-3 rounded-2xl bg-[#070B19]/90 border border-[#D4AF37]/40 backdrop-blur-xl flex flex-col md:flex-row items-center gap-3 shadow-2xl">
+                <div className="flex-1 w-full flex items-center gap-3 px-4 py-2 border-b md:border-b-0 md:border-r border-slate-800">
+                  <MapPin className="w-5 h-5 text-[#D4AF37]" />
+                  <input
+                    type="text"
+                    placeholder="Search destinations (e.g. Amalfi, Kyoto, Serengeti)..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="bg-transparent text-white text-sm focus:outline-none w-full placeholder-slate-500 font-medium"
+                  />
+                </div>
+                <Link
+                  href={searchQuery ? `/destinations?query=${encodeURIComponent(searchQuery)}` : '/destinations'}
+                  className="w-full md:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#AA8520] text-black font-bold text-xs uppercase tracking-wider hover:brightness-110 transition-all shadow-lg flex items-center justify-center gap-2 whitespace-nowrap"
+                >
+                  <Search className="w-4 h-4" /> Explore Sanctuaries
+                </Link>
+              </div>
             </div>
           </div>
+        </section>
 
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-            <button onClick={() => setActiveTab('home')} className={`transition-colors py-1 ${activeTab === 'home' ? 'text-[#D4AF37] border-b-2 border-[#D4AF37]' : 'text-slate-300 hover:text-white'}`}>
-              Home
-            </button>
-            <button onClick={() => setActiveTab('destinations')} className={`transition-colors py-1 ${activeTab === 'destinations' ? 'text-[#D4AF37] border-b-2 border-[#D4AF37]' : 'text-slate-300 hover:text-white'}`}>
-              Destinations
-            </button>
-            <button onClick={() => setActiveTab('gallery')} className={`transition-colors py-1 ${activeTab === 'gallery' ? 'text-[#D4AF37] border-b-2 border-[#D4AF37]' : 'text-slate-300 hover:text-white'}`}>
-              Gallery
-            </button>
-            <button onClick={() => setActiveTab('contact')} className={`transition-colors py-1 ${activeTab === 'contact' ? 'text-[#D4AF37] border-b-2 border-[#D4AF37]' : 'text-slate-300 hover:text-white'}`}>
-              Concierge
-            </button>
-          </nav>
+        {/* Featured Expeditions Grid */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+            <div>
+              <span className="text-xs font-bold text-[#D4AF37] tracking-widest uppercase bg-[#D4AF37]/10 px-4 py-1.5 rounded-full border border-[#D4AF37]/30">
+                FEATURED EXPEDITIONS
+              </span>
+              <h2 className="font-serif text-4xl font-bold text-white mt-3">Signature Global Journeys</h2>
+            </div>
+            <Link
+              href="/destinations"
+              className="inline-flex items-center gap-2 text-xs font-bold text-[#D4AF37] hover:text-white uppercase tracking-wider transition-colors"
+            >
+              View Full Portfolio ({INITIAL_TOURS.length}+) <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
 
-          <button onClick={() => setActiveTab('destinations')} className="px-5 py-2.5 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#AA8520] text-black font-semibold text-xs tracking-wider uppercase shadow-lg shadow-[#D4AF37]/20 hover:brightness-110 transition-all">
-            Explore Expeditions
-          </button>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main>
-        {activeTab === 'home' && (
-          <div>
-            <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
-              <div className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-105" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1800&auto=format&fit=crop')` }} />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#070B19] via-[#070B19]/50 to-black/30" />
-
-              <div className="relative z-10 max-w-4xl mx-auto px-4 text-center space-y-6">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#070B19]/80 border border-[#D4AF37]/40 backdrop-blur-md text-[#D4AF37] text-xs uppercase tracking-widest font-semibold">
-                  <Sparkles className="w-4 h-4" /> Bespoke Ultra-Luxury Expeditions
-                </div>
-                <h1 className="font-serif text-4xl sm:text-7xl font-bold tracking-tight text-white leading-tight">
-                  Unveil Earth’s Most Extraordinary Havens
-                </h1>
-                <p className="text-slate-300 text-base sm:text-xl max-w-2xl mx-auto font-light leading-relaxed">
-                  Private charter jets, Michelin culinary dining, and 24/7 dedicated personal concierges.
-                </p>
-
-                <div className="pt-6 max-w-3xl mx-auto">
-                  <div className="p-3 rounded-2xl bg-[#070B19]/90 border border-[#D4AF37]/30 backdrop-blur-xl flex flex-col md:flex-row items-center gap-3 shadow-2xl">
-                    <div className="flex-1 w-full flex items-center gap-3 px-4 py-2 border-b md:border-b-0 md:border-r border-slate-800">
-                      <MapPin className="w-5 h-5 text-[#D4AF37]" />
-                      <input
-                        type="text"
-                        placeholder="Search luxury destinations..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="bg-transparent text-white text-sm focus:outline-none w-full placeholder-slate-500"
-                      />
-                    </div>
-                    <button
-                      onClick={() => {
-                        fetchTours();
-                        setActiveTab('destinations');
-                      }}
-                      className="w-full md:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#AA8520] text-black font-semibold text-sm hover:brightness-110 transition-all shadow-lg flex items-center justify-center gap-2"
-                    >
-                      <Search className="w-4 h-4" /> Search
-                    </button>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {INITIAL_TOURS.slice(0, 3).map((item) => (
+              <div
+                key={item.id}
+                className="rounded-3xl bg-slate-900/40 border border-slate-800 overflow-hidden hover:border-[#D4AF37]/50 transition-all flex flex-col justify-between shadow-2xl group"
+              >
+                <div className="relative h-64 overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-[#D4AF37] font-bold text-xs">
+                    {item.price}
                   </div>
+                </div>
+                <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                  <div>
+                    <span className="text-[#D4AF37] text-xs font-semibold uppercase">{item.category} • {item.location}</span>
+                    <h3 className="font-serif text-xl font-bold text-white mt-1">{item.title}</h3>
+                    <p className="text-slate-400 text-xs mt-2 line-clamp-2 leading-relaxed">{item.description}</p>
+                  </div>
+                  <Link
+                    href={`/tours/${item.id}`}
+                    className="w-full py-3 rounded-xl border border-[#D4AF37]/40 text-[#D4AF37] font-bold text-xs uppercase hover:bg-gradient-to-r hover:from-[#D4AF37] hover:to-[#AA8520] hover:text-black transition-all text-center block"
+                  >
+                    View Expedition Specs
+                  </Link>
                 </div>
               </div>
-            </section>
+            ))}
           </div>
-        )}
+        </section>
 
-        {activeTab === 'destinations' && (
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div className="text-center max-w-2xl mx-auto mb-12">
-              <h1 className="font-serif text-4xl font-bold text-white mb-4">World Expeditions</h1>
-              <p className="text-slate-400 text-sm">Filter through our bespoke portfolio of private yachts, luxury villas, and safari sanctuaries.</p>
-            </div>
+        {/* Categories Showcase: Jet, Yacht, Honeymoon */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          <div className="text-center max-w-2xl mx-auto">
+            <span className="text-xs font-bold text-[#D4AF37] tracking-widest uppercase bg-[#D4AF37]/10 px-4 py-1.5 rounded-full border border-[#D4AF37]/30">
+              ULTRA-LUXURY DIVISIONS
+            </span>
+            <h2 className="font-serif text-4xl font-bold text-white mt-3">Tailored Travel Architecture</h2>
+          </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {tours.map((item) => (
-                <div key={item.id} className="rounded-3xl bg-slate-900/40 border border-slate-800 overflow-hidden hover:border-[#D4AF37]/50 transition-all flex flex-col">
-                  <div className="relative h-60 overflow-hidden">
-                    <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
-                    <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-[#D4AF37] font-bold text-xs">
-                      {item.price}
-                    </div>
-                  </div>
-                  <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-                    <div>
-                      <div className="text-[#D4AF37] text-xs font-semibold uppercase tracking-wider mb-1">{item.category}</div>
-                      <h3 className="font-serif text-xl font-bold text-white">{item.title}</h3>
-                      <p className="text-slate-400 text-xs mt-2 line-clamp-2">{item.description}</p>
-                    </div>
-                    <button
-                      onClick={() => setSelectedTour(item)}
-                      className="w-full py-3 rounded-xl border border-[#D4AF37]/40 text-[#D4AF37] font-semibold text-xs uppercase hover:bg-[#D4AF37] hover:text-black transition-all"
-                    >
-                      Explore & Reserve
-                    </button>
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="p-8 rounded-3xl bg-gradient-to-b from-slate-900/80 to-slate-950 border border-slate-800 space-y-5 hover:border-[#D4AF37]/50 transition-all flex flex-col justify-between">
+              <div className="space-y-4">
+                <div className="w-12 h-12 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/30 flex items-center justify-center text-[#D4AF37]">
+                  <Plane className="w-6 h-6" />
                 </div>
-              ))}
+                <h3 className="font-serif text-2xl font-bold text-white">Private Aviation</h3>
+                <p className="text-slate-400 text-xs leading-relaxed">
+                  Ultra long-range Gulfstream G650ER and Bombardier Global 7500 jets ready for global tarmac departure with zero wait times.
+                </p>
+              </div>
+              <Link
+                href="/private-jets"
+                className="w-full py-3 rounded-xl bg-slate-800 hover:bg-[#D4AF37] hover:text-black text-white font-bold text-xs uppercase text-center block transition-all"
+              >
+                Inspect Jet Fleet
+              </Link>
             </div>
-          </div>
-        )}
 
-        {activeTab === 'gallery' && (
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div className="text-center max-w-2xl mx-auto mb-12">
-              <h1 className="font-serif text-4xl font-bold text-white mb-4">Expedition Visuals</h1>
-              <p className="text-slate-400 text-sm">Moments captured from our private yacht voyages and alpine chalets.</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {['https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop', 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=800&auto=format&fit=crop', 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=800&auto=format&fit=crop'].map((img, i) => (
-                <div key={i} className="h-80 rounded-2xl overflow-hidden border border-slate-800">
-                  <img src={img} alt="Gallery" className="w-full h-full object-cover hover:scale-110 transition-transform duration-700" />
+            <div className="p-8 rounded-3xl bg-gradient-to-b from-slate-900/80 to-slate-950 border border-slate-800 space-y-5 hover:border-[#D4AF37]/50 transition-all flex flex-col justify-between">
+              <div className="space-y-4">
+                <div className="w-12 h-12 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/30 flex items-center justify-center text-[#D4AF37]">
+                  <Anchor className="w-6 h-6" />
                 </div>
-              ))}
+                <h3 className="font-serif text-2xl font-bold text-white">Superyacht Charters</h3>
+                <p className="text-slate-400 text-xs leading-relaxed">
+                  100m+ mega-yachts with glass infinity pools, submarine dive centers, and private onboard Michelin sommelier teams.
+                </p>
+              </div>
+              <Link
+                href="/yacht-charters"
+                className="w-full py-3 rounded-xl bg-slate-800 hover:bg-[#D4AF37] hover:text-black text-white font-bold text-xs uppercase text-center block transition-all"
+              >
+                Inspect Yacht Fleet
+              </Link>
+            </div>
+
+            <div className="p-8 rounded-3xl bg-gradient-to-b from-slate-900/80 to-slate-950 border border-slate-800 space-y-5 hover:border-[#D4AF37]/50 transition-all flex flex-col justify-between">
+              <div className="space-y-4">
+                <div className="w-12 h-12 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/30 flex items-center justify-center text-[#D4AF37]">
+                  <Heart className="w-6 h-6" />
+                </div>
+                <h3 className="font-serif text-2xl font-bold text-white">Honeymoon Havens</h3>
+                <p className="text-slate-400 text-xs leading-relaxed">
+                  Glass-bottom overwater villas in Bora Bora, Amalfi Coast cliffside retreats, and private hot spring ryokans in Kyoto.
+                </p>
+              </div>
+              <Link
+                href="/honeymoon"
+                className="w-full py-3 rounded-xl bg-slate-800 hover:bg-[#D4AF37] hover:text-black text-white font-bold text-xs uppercase text-center block transition-all"
+              >
+                Inspect Honeymoons
+              </Link>
             </div>
           </div>
-        )}
+        </section>
 
-        {activeTab === 'contact' && (
-          <div className="max-w-3xl mx-auto px-4 py-16">
-            <div className="text-center mb-12">
-              <h1 className="font-serif text-4xl font-bold text-white mb-4">Private Concierge Desk</h1>
-              <p className="text-slate-400 text-sm">Connect with our luxury travel architects for custom itinerary planning.</p>
+        {/* Concierge Form */}
+        <section className="max-w-4xl mx-auto px-4">
+          <div className="p-8 sm:p-12 rounded-3xl bg-slate-900/70 border border-[#D4AF37]/30 backdrop-blur-xl shadow-2xl space-y-8">
+            <div className="text-center space-y-2">
+              <span className="text-xs font-bold text-[#D4AF37] tracking-widest uppercase">VIP DESK</span>
+              <h2 className="font-serif text-3xl font-bold text-white">Consult Senior Travel Architect</h2>
+              <p className="text-slate-400 text-xs max-w-lg mx-auto">
+                Specify your custom dates, jet requirements, or private villa preferences. Our 24/7 concierge will contact you within 2 hours.
+              </p>
             </div>
 
             {!inquirySuccess ? (
-              <form onSubmit={handleInquiry} className="p-8 rounded-3xl bg-slate-900/60 border border-[#D4AF37]/30 backdrop-blur-xl shadow-2xl space-y-6">
+              <form onSubmit={handleInquiry} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="text-xs text-slate-300 font-semibold mb-2 block">Full Name</label>
-                    <input type="text" required value={contactName} onChange={(e) => setContactName(e.target.value)} placeholder="Lord / Lady / Mr. John Doe" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:border-[#D4AF37] focus:outline-none" />
+                    <input
+                      type="text"
+                      required
+                      value={contactName}
+                      onChange={(e) => setContactName(e.target.value)}
+                      placeholder="Lord / Lady / Mr. John Doe"
+                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:border-[#D4AF37] focus:outline-none"
+                    />
                   </div>
                   <div>
                     <label className="text-xs text-slate-300 font-semibold mb-2 block">Email Address</label>
-                    <input type="email" required value={contactEmail} onChange={(e) => setContactEmail(e.target.value)} placeholder="concierge@vip.com" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:border-[#D4AF37] focus:outline-none" />
+                    <input
+                      type="email"
+                      required
+                      value={contactEmail}
+                      onChange={(e) => setContactEmail(e.target.value)}
+                      placeholder="concierge@vip.com"
+                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:border-[#D4AF37] focus:outline-none"
+                    />
                   </div>
                 </div>
                 <div>
-                  <label className="text-xs text-slate-300 font-semibold mb-2 block">Custom Itinerary Details</label>
-                  <textarea rows={4} required value={contactDetails} onChange={(e) => setContactDetails(e.target.value)} placeholder="Specify preferred dates, party size, and butler requests..." className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:border-[#D4AF37] focus:outline-none" />
+                  <label className="text-xs text-slate-300 font-semibold mb-2 block">Custom Expedition Specifications</label>
+                  <textarea
+                    rows={4}
+                    required
+                    value={contactDetails}
+                    onChange={(e) => setContactDetails(e.target.value)}
+                    placeholder="Specify preferred travel dates, destination preferences, jet requirements, or butler requests..."
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:border-[#D4AF37] focus:outline-none"
+                  />
                 </div>
-                <button type="submit" className="w-full py-4 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#AA8520] text-black font-bold text-xs uppercase tracking-wider shadow-lg">
-                  Submit Inquiry to Concierge
+                <button
+                  type="submit"
+                  className="w-full py-4 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#AA8520] text-black font-bold text-xs uppercase tracking-widest hover:brightness-110 transition-all shadow-lg"
+                >
+                  Submit Private Travel Inquiry
                 </button>
               </form>
             ) : (
-              <div className="p-8 rounded-3xl bg-slate-900 border border-[#D4AF37] text-center space-y-4">
+              <div className="p-8 rounded-3xl bg-slate-950 border border-[#D4AF37] text-center space-y-4">
                 <CheckCircle2 className="w-12 h-12 text-[#D4AF37] mx-auto" />
-                <h3 className="font-serif text-2xl font-bold text-white">Inquiry Received</h3>
-                <p className="text-slate-300 text-sm">Your private concierge officer will reach out within 2 hours.</p>
+                <h3 className="font-serif text-2xl font-bold text-white">Inquiry Submitted to VIP Desk</h3>
+                <p className="text-slate-300 text-sm">Thank you, {contactName}. Your dedicated travel officer will reach out shortly.</p>
               </div>
             )}
           </div>
-        )}
+        </section>
       </main>
 
-      {/* Booking Modal */}
-      <AnimatePresence>
-        {selectedTour && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-            <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }} className="max-w-2xl w-full bg-[#070B19] border border-[#D4AF37]/40 rounded-3xl p-8 space-y-6 relative">
-              <button onClick={() => { setSelectedTour(null); setBookingSuccess(false); }} className="absolute top-4 right-4 text-slate-400 hover:text-white">
-                <X className="w-6 h-6" />
-              </button>
-
-              {!bookingSuccess ? (
-                <form onSubmit={handleBooking} className="space-y-4">
-                  <h2 className="font-serif text-2xl font-bold text-white">{selectedTour.title}</h2>
-                  <p className="text-[#D4AF37] font-bold text-lg">{selectedTour.price} / guest</p>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-slate-800">
-                    <div>
-                      <label className="text-xs text-slate-400 mb-1 block">Your Name</label>
-                      <input type="text" required value={guestName} onChange={(e) => setGuestName(e.target.value)} placeholder="John Doe" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white" />
-                    </div>
-                    <div>
-                      <label className="text-xs text-slate-400 mb-1 block">Email</label>
-                      <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="john@vip.com" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white" />
-                    </div>
-                  </div>
-
-                  <button type="submit" className="w-full py-4 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#AA8520] text-black font-bold text-xs uppercase tracking-wider shadow-lg">
-                    Confirm Reservation via API
-                  </button>
-                </form>
-              ) : (
-                <div className="text-center py-6 space-y-4">
-                  <CheckCircle2 className="w-12 h-12 text-[#D4AF37] mx-auto" />
-                  <h3 className="font-serif text-2xl font-bold text-white">Booking Saved in Database</h3>
-                  <p className="text-slate-300 text-sm">Thank you, {guestName}. Your reservation is confirmed.</p>
-                </div>
-              )}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <Footer />
     </div>
   );
 }
